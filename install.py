@@ -96,8 +96,16 @@ ENTITIES = {
             'app': '904280696'
         }
     },
-    'obsidian': {},
-    'chrome': {},
+    'obsidian': {
+        'detect': {
+            'command': '[ -d /Applications/Obsidian.app ] && echo installed',
+            'shell': True
+        },
+        'dmg': {
+            'url': 'https://github.com/obsidianmd/obsidian-releases/releases/download/v1.1.16/Obsidian-1.1.16-universal.dmg',
+            'volume_path': '/Volumes/Obsidian\ 1.1.16-universal',
+        }
+    },
     'miniconda': {
         'detect': {
             'command': ['conda', '--version']
@@ -164,11 +172,28 @@ ENTITIES = {
         },
     },
     'discord': {
+        'detect': {
+            'command': '[ -d /Applications/Discord.app ] && echo installed',
+            'shell': True
+        },
         'dmg': {
-            'url': 'https://discord.com/api/download?platform=osx'
+            'url': 'https://discord.com/api/download?platform=osx',
+            'volume_path': '/Volumes/Discord'
         }
     },
     'docker': {
+        'detect': {
+            'command': ['docker', '--version'],
+        },
+        'run': {
+            'command': """\
+                curl -o /tmp/Docker.dmg https://desktop.docker.com/mac/main/arm64/Docker.dmg \
+                  && sudo hdiutil attach /tmp/Docker.dmg \
+                  && sudo /Volumes/Docker/Docker.app/Contents/MacOS/install \
+                  && sudo hdiutil detach /Volumes/Docker
+            """,
+            'require_sudo': True
+        },
     },
 }
 
@@ -309,6 +334,34 @@ def mas(entities):
         check=True
     )
 
+@system('dmg')
+def dmg(entities):
+    for pkg, v in entities.items():
+        component = v['dmg']
+
+        if not check_sudo():
+            print('error: sudo required. run sudo then re-run.')
+            exit(1)
+
+        subprocess.run(
+            ['curl', '-fsSL', '-o', f"/tmp/{pkg}.dmg", component['url']],
+            check=True
+        )
+        subprocess.run(
+            ['sudo', 'hdiutil', 'attach', f"/tmp/{pkg}.dmg"],
+            check=True
+        )
+        subprocess.run(
+            f"sudo cp -R {component['volume_path']}/*.app /Applications/",
+            shell=True,
+            check=True
+        )
+        subprocess.run(
+            f"sudo hdiutil unmount {component['volume_path']}",
+            shell=True,
+            check=True
+        )
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -326,6 +379,7 @@ def main():
     run()
     pkg()
     mas()
+    dmg()
 
 
 if __name__ == '__main__':
