@@ -195,6 +195,15 @@ ENTITIES = {
             'require_sudo': True
         },
     },
+    'zoom': {
+        'detect': {
+            'command': '[ -d /Applications/zoom.us.app ] && echo installed',
+            'shell': True
+        },
+        'pkg': {
+            'url': 'https://zoom.us/client/5.13.11.16405/zoomusInstallerFull.pkg?archType=arm64'
+        }
+    }
 }
 
 def system(component, include_detected=False):
