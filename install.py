@@ -188,6 +188,15 @@ ENTITIES = {
             'args': '-fsSL',
             'shell': 'python3',
         },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/poetry/.poetry.zsh': f"{os.environ['HOME']}/.poetry.zsh",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
     },
     'discord': {
         'detect': {
