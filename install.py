@@ -104,7 +104,34 @@ ENTITIES = {
             ]
         }
     },
-    'vim': {},
+    'vim': {
+        'detect': {
+            'command': ['vim', '--version']
+        },
+        'run': {
+            'command': 'mkdir -p ~/.vitmp/{backup,swp,undo} ~/.vim/pack'
+        },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/vim/.vimrc': f"{os.environ['HOME']}/.vimrc",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
+    },
+    'vim-csris': {
+        'detect': {
+            'command': f"[ -d {os.environ['HOME']}/.vim/pack/vim-csris ] && echo installed",
+            'shell': True
+        },
+        'git': {
+            'repo': 'https://github.com/csris/vim-csris.git',
+            'clone_args': ['--recurse-submodules'],
+            'dest': f"{os.environ['HOME']}/.vim/pack/vim-csris"
+        }
+    },
     'things': {
         'detect': {
             'command': "mas list | grep 904280696 | awk '{print $3;}'",
