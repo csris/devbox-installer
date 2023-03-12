@@ -439,6 +439,16 @@ def files(entities):
                 check=True
             )
 
+@system('git')
+def git(entities):
+    for pkg, v in entities.items():
+        component = v['git']
+        clone_args = component.get('clone_args', [])
+
+        subprocess.run(
+            ['git', 'clone'] + clone_args + [component['repo'], component['dest']],
+            check=True
+        )
 
 def main():
     parser = argparse.ArgumentParser(
@@ -458,6 +468,7 @@ def main():
     mas()
     dmg()
     files()
+    git()
 
 
 if __name__ == '__main__':
