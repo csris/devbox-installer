@@ -230,7 +230,22 @@ ENTITIES = {
         'pkg': {
             'url': 'https://zoom.us/client/5.13.11.16405/zoomusInstallerFull.pkg?archType=arm64'
         }
-    }
+    },
+    'zsh': {
+        'detect': {
+            'command': ['zsh', '--version']
+        },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/zsh/.zprofile': f"{os.environ['HOME']}/.zprofile",
+                'https://api.github.com/repos/csris/dotfiles/contents/zsh/.zshrc': f"{os.environ['HOME']}/.zshrc",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
+    },
 }
 
 def system(component, include_detected=False):
