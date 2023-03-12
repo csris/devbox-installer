@@ -246,6 +246,20 @@ ENTITIES = {
             ]
         }
     },
+    'git': {
+        'detect': {
+            'command': ['git', '--version']
+        },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/git/.gitconfig': f"{os.environ['HOME']}/.gitconfig",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
+    },
 }
 
 def system(component, include_detected=False):
