@@ -287,6 +287,20 @@ ENTITIES = {
             ]
         }
     },
+    'ssh': {
+        'detect': {
+            'command': ['ssh', '-V']
+        },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/ssh/config': f"{os.environ['HOME']}/.ssh/config",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
+    },
 }
 
 def system(component, include_detected=False):
