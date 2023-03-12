@@ -94,6 +94,15 @@ ENTITIES = {
         'brew': {
             'package': 'tmux'
         },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/tmux/.tmux.conf': f"{os.environ['HOME']}/.tmux.conf",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
     },
     'vim': {},
     'things': {
