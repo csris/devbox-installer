@@ -3,7 +3,7 @@ This repo contains a script meant to make it easier to install software on a new
 ## Design
 Because the script is meant to be `curl`'ed on a new laptop, there are a few restrictions on the design. First, it must all be in one file. If this proves too unwieldy, I might write a preprocessor in the future to concatenate multiple files together. Second, it cannot use any dependencies except for modules provided in the standard library.
 
-The overall design of this script is inspired by [Prodspec and Annealing](https://www.usenix.org/publications/loginonline/prodspec-and-annealing-intent-based-actuation-google-production), which itself is inspired by [Entity Component System] architectures in game design—hence the somewhat odd naming in the script.
+The overall design of this script is inspired by [Prodspec and Annealing](https://www.usenix.org/publications/loginonline/prodspec-and-annealing-intent-based-actuation-google-production), which itself is inspired by [Entity Component System](https://en.wikipedia.org/wiki/Entity_component_system) architectures in game design—hence the somewhat odd naming in the script.
 
 ## License
 ```
