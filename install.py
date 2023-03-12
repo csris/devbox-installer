@@ -40,6 +40,15 @@ ENTITIES = {
         'brew': {
             'package': 'fzf'
         },
+        'files': {
+            'file_map': {
+                'https://api.github.com/repos/csris/dotfiles/contents/fzf/.fzf.zsh': f"{os.environ['HOME']}/.fzf.zsh",
+            },
+            'curl_args': [
+                '-H', f"Authorization: Bearer {os.environ['GITHUB_TOKEN']}",
+                '-H', 'Accept: application/vnd.github.raw',
+            ]
+        }
     },
     'nvm': {
         'detect': {
