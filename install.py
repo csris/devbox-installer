@@ -371,6 +371,18 @@ def dmg(entities):
             check=True
         )
 
+@system('files', include_detected=True)
+def files(entities):
+    for pkg, v in entities.items():
+        component = v['files']
+        curl_args = component.get('curl_args', [])
+
+        for url, dest in component['file_map'].items():
+            subprocess.run(
+                ['curl', '-fsSL', '-o', dest] + curl_args + [url],
+                check=True
+            )
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -389,6 +401,7 @@ def main():
     pkg()
     mas()
     dmg()
+    files()
 
 
 if __name__ == '__main__':
