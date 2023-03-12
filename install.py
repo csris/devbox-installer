@@ -320,7 +320,8 @@ def detect(entities):
                 component['command'], 
                 shell=shell, 
                 executable=executable,
-                capture_output=True, 
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
                 text=True
             )
 
